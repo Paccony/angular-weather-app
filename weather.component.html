@@ -1,0 +1,68 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+    <div class="p-6">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">Weather App</h2>
+        <p class="text-gray-600">Get current weather information for any city</p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <input 
+          type="text" 
+          [(ngModel)]="cityName" 
+          placeholder="Enter city name" 
+          (keyup.enter)="getWeather()"
+          class="flex-grow px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+        >
+        <button 
+          (click)="getWeather()" 
+          class="px-6 py-3 bg-green-500 text-white font-medium rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
+        >
+        
+        </button>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <p class="text-red-700 font-medium">{{ errorMessage }}</p>
+      </div>
+
+      
+      <div *ngIf="showResult && weatherData" class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4 text-center">{{ weatherData.name }}</h3>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm">Temperature</p>
+            <p class="text-2xl font-bold text-blue-600">{{ weatherData.main.temp }}°C</p>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm">Humidity</p>
+            <p class="text-2xl font-bold text-green-600">{{ weatherData.main.humidity }}%</p>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm">Wind Speed</p>
+            <p class="text-2xl font-bold text-purple-600">{{ weatherData.wind.speed }} m/s</p>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <p class="text-gray-500 text-sm">Conditions</p>
+            <p class="text-lg font-medium text-orange-600 capitalize">{{ weatherData.weather[0].description }}</p>
+          </div>
+        </div>
+        
+    
+        <div *ngIf="weatherData.weather[0].icon" class="text-center mt-6">
+          <img 
+            [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'" 
+            [alt]="weatherData.weather[0].description"
+            class="inline-block"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
